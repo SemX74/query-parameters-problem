@@ -4,6 +4,7 @@ interface FilterProps {
 }
 
 const Filter: React.FC<FilterProps> = ({ title, onDelete }) => {
+
   return (
     <div
       onClick={() => onDelete(title)}
