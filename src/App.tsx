@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import FiltersList from "./Components/FiltersList";
-import QuestionsList from "./Components/QuestionsList";
-import { useGetFilters } from "./Hooks/useGetFilters";
+import FiltersList from "./components/FiltersList";
+import QuestionsList from "./components/QuestionsList";
+import { useGetFilters } from "./hooks/useGetFilters";
 interface AppProps {}
 
 const App: React.FC<AppProps> = () => {

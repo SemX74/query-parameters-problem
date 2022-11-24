@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { questionsData } from "../Service/QuestionsData";
+import { questionsData } from "../service/questionsData";
 import { useGetParams } from "./useGetParams";
 
 export interface Question {

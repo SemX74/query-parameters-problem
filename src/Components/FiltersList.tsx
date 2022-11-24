@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { IFilter, useGetFilters } from "../Hooks/useGetFilters";
-import { useGetParams } from "../Hooks/useGetParams";
+import { IFilter, useGetFilters } from "../hooks/useGetFilters";
+import { useGetParams } from "../hooks/useGetParams";
 import Filter from "./Filter";
 
 interface FilterListProps {}
@@ -13,7 +13,7 @@ const FilterList: React.FC<FilterListProps> = () => {
   const [stateFilters, setStateFilters] = useState<IFilter[]>();
 
   console.log("FilterList Render");
-  
+
   useEffect(() => {
     setStateFilters(filters);
     let newFilters = filters?.map((filter) => {

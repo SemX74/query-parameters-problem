@@ -1,4 +1,4 @@
-import { useGetQuestions } from "../Hooks/useGetQuestions.ts";
+import { useGetQuestions } from "../hooks/useGetQuestions.ts";
 import Question from "./Question";
 
 interface QuestionsListProps {}
