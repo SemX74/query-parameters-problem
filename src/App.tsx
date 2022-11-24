@@ -1,50 +1,58 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import List from "./Components/List";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import FiltersList from "./Components/FiltersList";
 import QuestionsList from "./Components/QuestionsList";
-import { useAppDispatch, useGetFilters } from "./Hooks/ReduxHooks";
-import { addQuestions } from "./Redux/QuestionsSlice";
-import { questionsData } from "./Service/QuestionsData";
+import { useGetFilters } from "./Hooks/useGetFilters";
 interface AppProps {}
 
 const App: React.FC<AppProps> = () => {
-  const filters = useGetFilters();
+  const [inputValue, setInputValue] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { isValid } = useGetFilters();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const isValid =
-    !filters.co.length &&
-    !filters.pos.length &&
-    !filters.tag.length &&
-    !filters.q;
+  console.log("App render");
 
+  //мне лень писать тип для евента
+  const handleChange = (e: any) => {
+    setInputValue(e.target.value);
+  };
   useEffect(() => {
-    dispatch(addQuestions(questionsData));
-  }, []);
+    if (inputValue === "") {
+      searchParams.delete("title");
+    } else {
+      searchParams.set("title", inputValue.toLowerCase());
+    }
+    setSearchParams(searchParams);
+  }, [inputValue]);
 
+  useEffect(() => {}, [inputValue]);
   return (
     <div className="bg-slate-600 w-full h-screen flex justify-center items-center">
       <div className="flex flex-col justify-start items-center">
         <h1 className="text-white font-bold text-[25px]">
           Query Parameters Problem
         </h1>
-        <p className="text-slate-400 ">
-          hint: <br />
-          <span className="opacity-100 text-white">
-            ?q=easy&co=amazon&pos=ML+Engineer&tag=statistics
-          </span>
-        </p>
         <section className="flex justify-center items-center flex-col mt-8">
-          <button
-            className="bg-green-700 border-green-700 font-bold text-white hover:bg-transparent disabled:hover:text-white hover:text-lime-500 border-2 duration-200 rounded p-2 py-1 cursor-pointer disabled:border-transparent disabled:bg-gray-500 disabled:cursor-not-allowed"
-            disabled={isValid}
-            onClick={() => {
-              navigate("/");
-              navigate(0);
-            }}
-          >
-            RESET
-          </button>
-          <List />
+          <div className="flex justify-center items-center h-12">
+            <input
+              placeholder="Search..."
+              className="rounded bg-slate-800 border-slate-800 focus:border-dashed outline-none focus:border-slate-600 border-4 p-2 my-2 text-white "
+              value={inputValue}
+              onChange={handleChange}
+            />
+            <button
+              className="bg-green-700 border-green-700 h-full font-bold text-white hover:bg-transparent disabled:hover:text-white hover:text-lime-500  mx-4 border-solid border-2 duration-200 rounded p-2 py-1 cursor-pointer disabled:border-transparent disabled:bg-gray-500 disabled:cursor-not-allowed"
+              disabled={isValid}
+              onClick={() => {
+                navigate("/");
+                navigate(0);
+              }}
+            >
+              RESET
+            </button>
+          </div>
+
+          <FiltersList />
           <QuestionsList />
         </section>
       </div>
